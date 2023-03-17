@@ -1,25 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import {useState} from 'react'
+import Form from './components/Form/Form'
+// import {ChangeEvent} from 'react'
+import { v4 as uuidV4 } from 'uuid';
+import Todo from './components/Todo/Todo'
+import "./App.css"
+import Header from './components/Header/Header'
+
+
+type todoProperties ={
+title: string, 
+id: string
+}
+
+const App = () => {
+const [value, setValue] =useState('')  
+const [todos, setClick] = useState<todoProperties[]>([])
+
+
+const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const newValue = e.target.value
+  setValue(newValue)
+}
+
+
+const handleFormClick =(e: React.MouseEvent<HTMLButtonElement>)=>{ 
+  e.preventDefault()
+  console.log(todos)
+  
+const newTodo: todoProperties = {title: value, id:uuidV4()}
+setClick([...todos, newTodo])
+setValue("")
+}
+
+
+const deleteTodo =(item:todoProperties)=>{
+  console.log("iwqrfb")
+  setClick((prevValue)=>{
+    return prevValue.filter((todo)=>{
+      return item.id !== todo.id
+    })
+  })
+}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <div className="App">
+     <Header />
+     <Form
+     onChangeHandler={handleFormChange}
+     clickHandler={handleFormClick}
+     value= {value}
+     />
+      <div className="TodoContainer">
+      {todos.map((item)=>{
+         return(
+           <Todo
+           key={item.id}
+           id={item.id} 
+           name={item.title}
+           deleteTodo={()=>deleteTodo(item)}
+           />
+           
+         )
+       })}
+     </div>
+   </div>
   );
 }
 

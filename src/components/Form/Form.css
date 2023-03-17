@@ -1,0 +1,21 @@
+
+
+.TodoForm{
+    margin-top: 5rem;
+    background-color: #ff7eb9;
+    height: 10rem;
+    width: 30rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.FormInput{
+height: 1rem;
+width: 20rem;
+}
+
+.FormButton{
+   
+}
